@@ -33,16 +33,16 @@
                 // Paramètrage du logo Erreur
                     var srcImglogoER    = ('#logo_error#'!='#'+'logo_error#') ? "#logo_error#" : "error";
                     var srcImglogoER_T  = ('#logoER_type#'!='#'+'logoER_type#') ? "#logoER_type#" : "png";
-            
+
             // Update
                     var srcPictureID;
-                    var State           = parseFloat(_options.display_value);	
+                    var State           = parseFloat(_options.display_value);
                 if (State < level_1){
                     srcPictureID = 'moon';
                 } else if (State >= level_1 && State < level_2){
                     srcPictureID = 'cloud';
                 } else if (State >= level_2){
-                    srcPictureID = 'sun';  
+                    srcPictureID = 'sun';
                 } else {
                     srcPictureID = 'error';
                 }
@@ -53,7 +53,7 @@
                     $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="'+srcImgURL +srcPictureID+ '.png" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">');
                 }
             $('.cmd[data-cmd_uid=#uid#] .value#id#').empty().append(_options.display_value+' '+'#unite#');
-            $('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate)        
+            $('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate);
         }
         jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
 	</script>
