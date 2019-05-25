@@ -3,22 +3,21 @@
         Basé sur les widget de 		: garg24
         Mise à jour			        : JAG 20190518 : Nettoyage du code
     -->
-     <div class="title #hide_name#">
-        <div class="cmdName" style="#hideCmdName#">#name_display#</div>
-    </div>
-    <div class="content-sm ">
-        <span class="iconCmd#id#"></span>
-    </div>
-    <div style="font-weight: bold;font-size : 10px;">
-        <span class="timeCmd#id#" ></span>
-    </div>
-    <div class="value">
-        <span class="value#id# timeCmd label label-default value"></span>
-    </div>
-    <!-- Historique -->
-        <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;margin-top:0px;">
-            <span title="Min" class="tooltips">#minHistoryValue#</span>|<span title="Moy" class="tooltips">#averageHistoryValue#</span>|<span title="Max" class="tooltips">#maxHistoryValue#</span> <i class="#tendance#"></i>
+	<div class="row">
+        <div class="title #hide_name#">
+            <div class="cmdName" style="#hideCmdName#">#name_display#</div>
         </div>
+        <div class="content-sm ">
+            <span class="iconCmd#id#"></span>
+        </div>
+        <div class="value">
+            <span class="value#id# timeCmd label label-default value"></span>
+        </div>
+        <!-- Historique -->
+            <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;">
+                <span title="Min" class="tooltips">#minHistoryValue#</span>|<span title="Moy" class="tooltips">#averageHistoryValue#</span>|<span title="Max" class="tooltips">#maxHistoryValue#</span> <i class="#tendance#"></i>
+        </div>
+    </div>
     <script>
         jeedom.cmd.update['#id#'] = function(_options){
             // Options de personnalisation avec valeur par defaut
