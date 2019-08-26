@@ -1,59 +1,117 @@
-<div style="padding:0;width:70px;min-height:90px;margin-right:10px;margin-left:10px;" class="cmd tooltips cmd-widget cursor container-fluid #history# " data-type="info" data-subtype="numeric" data-cmd_id="#id#" data-cmd_uid="#uid#" data-eqLogic_id="#eqLogic_id#" data-eqLogic_id="#eqLogic_id#" title="#collectDate#">
+<div style="min-width:70px;min-height:90px;" class="cmd tooltips cmd-widget cursor container-fluid #history# " data-type="info" data-subtype="numeric" data-cmd_id="#id#" data-cmd_uid="#uid#" data-eqLogic_id="#eqLogic_id#" data-eqLogic_id="#eqLogic_id#" title="#collectDate#">
     <!-- Info Widget
-        Basé sur les widget de 		: garg24
-        Mise à jour			        : JAG 20190518 : Nettoyage du code
+        Basé sur les widget de 	: jpoilux + garg24
+        Mise à jour				: JAG 20190926 : Amélioration posibilité de positionner la légende en top/right/left
     -->
-	<div class="row">
-        <div class="title #hide_name#">
-            <div class="cmdName" style="#hideCmdName#">#name_display#</div>
-        </div>
-        <div class="content-sm ">
-            <span class="iconCmd#id#"></span>
-        </div>
-        <div class="value">
-            <span class="value#id# timeCmd label label-default value"></span>
-        </div>
-        <!-- Historique -->
-            <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;">
-                <span title="Min" class="tooltips">#minHistoryValue#</span>|<span title="Moy" class="tooltips">#averageHistoryValue#</span>|<span title="Max" class="tooltips">#maxHistoryValue#</span> <i class="#tendance#"></i>
-        </div>
+    <div class="title #hide_name#">
+        <div class="cmdName" style="#hideCmdName#">#name_display#</div>
     </div>
-    <script>
-        jeedom.cmd.update['#id#'] = function(_options){
-            // Options de personnalisation avec valeur par defaut
-                // Paramètre "sizehw" : à déclarer en pixels - 80 maxi
-                    var srcImgHeight    = (is_numeric('#sizeh#')) ? parseFloat('#sizeh#') : 70;
+    <!-- Début Valeur en position haute -->
+        <div id="LumState#id#" class="Lum_state_top" style="display:inline-block;">
+            <div class="value">
+                <span class="value#id# timeCmd label label-default value"></span>
+            </div>
+            <!-- Historique -->
+                <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;text-align: left;">
+                    <span title="Min" class="tooltips">#minHistoryValue#</span>|<span title="Moy" class="tooltips">#averageHistoryValue#</span>|<span title="Max" class="tooltips">#maxHistoryValue#</span> <i class="#tendance#"></i>
+                </div>
+        </div>
+    <!-- Fin Valeur en position haute -->
+    <div style="text-align:center;">
+        <div id="LumDivIMG#id#" class="Lum_div_img">
+            <span id="LumIMG#id#" class="iconCmd#id# Lum_img"></span>
+        </div>
+        <!-- Début Valeur en position autre que haute -->
+            <div id="LumState#id#" class="Lum_state_other" style="display:inline-block;">
+                <div class="value">
+                    <span class="value#id# timeCmd label label-default value"></span>
+                </div>
+                <!-- Historique -->
+                    <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;text-align: left;">
+                        <span title="Min" class="tooltips">#minHistoryValue#</span>|<span title="Moy" class="tooltips">#averageHistoryValue#</span>|<span title="Max" class="tooltips">#maxHistoryValue#</span> <i class="#tendance#"></i>
+                    </div>
+            </div>
+        <!-- Fin Valeur en position autre que haute -->
+    </div>
+<script>
+    jeedom.cmd.update['#id#'] = function(_options){
+        // Options de personnalisation avec valeur par defaut
+            // Paramètre "sizehw" : à déclarer en pixels - 80 maxi
+                    var srcImgHeight    = (is_numeric('#sizeh#')) ? parseFloat('#sizeh#') : 65;
                     var srcImgWidth     = (is_numeric('#sizew#')) ? parseFloat('#sizew#') : 70;
-                // Paramétrage Niveau
+                    var srcImgSize      = 'height='+srcImgHeight+'px width='+srcImgWidth+'px';
+            // Paramétrage Niveau
                     var level_1         = (is_numeric('#level_1#')) ? parseFloat('#level_1#') : 20;
                     var level_2         = (is_numeric('#level_2#')) ? parseFloat('#level_2#') : 100.0;
-                // Paramétrage des images
+            // Paramétrage des images
                     var srcImgURL       = 'plugins/widget/core/template/dashboard/cmd.info.numeric.Luminosite-IMG-Mini/';
                 // Paramètrage du logo Erreur
                     var srcImglogoER    = ('#logo_error#'!='#'+'logo_error#') ? "#logo_error#" : "error";
                     var srcImglogoER_T  = ('#logoER_type#'!='#'+'logoER_type#') ? "#logoER_type#" : "png";
+                // Paramètrage des images
+                    var srcImgLevel1	= ('#logo_level1#'!='#'+'logo_level1#') ? "#logo_level1#" : "moon";
+                    var srcImgLevel1_T	= ('#logo_level_type1#'!='#'+'logo_level_type1#') ? "#logo_level_type1#" : "png";
+                    var srcImgLevel2	= ('#logo_level2#'!='#'+'logo_level2#') ? "#logo_level2#" : "cloud";
+                    var srcImgLevel2_T	= ('#logo_level_type2#'!='#'+'logo_level_type2#') ? "#logo_level_type2#" : "png";
+                    var srcImgLevel3	= ('#logo_level3#'!='#'+'logo_level3#') ? "#logo_level3#" : "sun";
+                    var srcImgLevel3_T	= ('#logo_level_type3#'!='#'+'logo_level_type3#') ? "#logo_level_type3#" : "png";        
+            // Paramètre de la position de la légende
+                    var srcImgleg_pos	= ('#leg_pos#'!='#'+'leg_pos#') ? "#leg_pos#" : "low";
 
-            // Update
-                    var srcPictureID;
-                    var State           = parseFloat(_options.display_value);
-                if (State < level_1){
-                    srcPictureID = 'moon';
-                } else if (State >= level_1 && State < level_2){
-                    srcPictureID = 'cloud';
-                } else if (State >= level_2){
-                    srcPictureID = 'sun';
-                } else {
-                    srcPictureID = 'error';
-                }
-            // Update IMG + gestion erreur
-                if (srcPictureID == "error"){
-                    $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="'+srcImgURL +srcImglogoER+ +'.'+ srcImglogoER_T+'" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">');
-                } else {
-                    $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="'+srcImgURL +srcPictureID+ '.png" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">');
-                }
+        // Update
+            var srcPictureID;
+            var srcImglogo_T;
+            var State = parseFloat(_options.display_value);
+            if (State < level_1){
+                srcPictureID = srcImgLevel1;
+                srcImglogo_T = srcImgLevel1_T;
+            } else if (State >= level_1 && State < level_2){
+                srcPictureID = srcImgLevel2;
+                srcImglogo_T = srcImgLevel2_T;
+            } else if (State >= level_2){
+                srcPictureID = srcImgLevel3;
+                srcImglogo_T = srcImgLevel3_T;
+            } else {
+                srcPictureID = 'error';
+            }
+        // Update IMG + gestion erreur
+            if (srcPictureID == "error"){
+                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="'+srcImgURL +srcImglogoER +'.'+ srcImglogoER_T+'" style="height:80px;width:80px;">');
+            } else {
+                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').empty().append('<img src="'+srcImgURL +srcPictureID +'.'+ srcImglogo_T+'" '+srcImgSize+'>');
+            }
             $('.cmd[data-cmd_uid=#uid#] .value#id#').empty().append(_options.display_value+' '+'#unite#');
-            $('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate);
-        }
-        jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
-	</script>
+            $('.cmd[data-cmd_uid=#uid#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate);
+        
+        // Position Image et valeur
+            if (srcImgleg_pos == "right") {
+                // Image
+                    $("#LumDivIMG#id#.Lum_div_img").css("float","left");
+                    $("#LumIMG#id#.Lum_img").css("margin-right","15px");
+                // Texte
+                    $("#LumState#id#.Lum_state_top").css("display","none");
+                    $("#LumState#id#.Lum_state_top").css("visibility","hidden");
+            } else if (srcImgleg_pos == "left"){
+                // Image
+                    $("#LumDivIMG#id#.Lum_div_img").css("float","right");
+                    $("#LumIMG#id#.Lum_img").css("margin-left","15px");
+                // Texte
+                    $("#LumState#id#.Lum_state_top").css("display","none");
+                    $("#LumState#id#.Lum_state_top").css("visibility","hidden");
+            } else if (srcImgleg_pos == "top"){
+                // Image
+                    //aucune modification nécessaire
+                // Texte
+                    $("#LumState#id#.Lum_state_other").css("display","none");
+                    $("#LumState#id#.Lum_state_other").css("visibility","hidden");
+            } else if (srcImgleg_pos == "low"){
+                // Image
+                    //aucune modification nécessaire
+                // Texte
+                    $("#LumState#id#.Lum_state_top").css("display","none");
+                    $("#LumState#id#.Lum_state_top").css("visibility","hidden");
+            }
+    }
+    jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
+</script>
 </div>
