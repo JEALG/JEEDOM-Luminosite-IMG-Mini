@@ -1,125 +1,132 @@
 <div style="min-width:70px;min-height:90px;" class="cmd tooltips cmd-widget cursor container-fluid #history# " data-type="info" data-subtype="numeric" data-cmd_id="#id#" data-cmd_uid="#uid#" data-eqLogic_id="#eqLogic_id#" data-eqLogic_id="#eqLogic_id#" title="#collectDate#">
     <!-- Info Widget
-        Basé sur les widget de 	: jpoilux + garg24
-        Mise à jour				:JAG 20190918 : Migration uniquement pour core V4
-    -->
+        Widget de           : JAG
+        Widget pour le Core : V4
+        Mise à jour         : JAG 20200502 => Ajout Version Core
+	-->
     <div class="title #hide_name#">
         <div class="cmdName" style="#hideCmdName#">#name_display#</div>
     </div>
     <!-- Début Valeur en position haute -->
-        <div id="LumState#id#" class="Lum_state_top" style="display:inline-block;">
-            <div class="value">
-                <span class="value#id# timeCmd label label-default value"></span>
-            </div>
-            <!-- Historique -->
-                <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;text-align: left;">
-                    <span title="Min" class="tooltips">#minHistoryValue#</span>|<span title="Moy" class="tooltips">#averageHistoryValue#</span>|<span title="Max" class="tooltips">#maxHistoryValue#</span> <i class="#tendance#"></i>
-                </div>
+    <div id="LumState#id#" class="Lum_state_top" style="display:inline-block;">
+        <div class="value">
+            <span class="value#id# timeCmd label label-default value"></span>
         </div>
+        <!-- Historique -->
+        <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;text-align: left;">
+            <span title="Min" class="tooltips">#minHistoryValue#</span>|<span title="Moy" class="tooltips">#averageHistoryValue#</span>|<span title="Max" class="tooltips">#maxHistoryValue#</span> <i class="#tendance#"></i>
+        </div>
+    </div>
     <!-- Fin Valeur en position haute -->
     <div style="text-align:center;">
         <div id="LumDivIMG#id#" class="Lum_div_img">
             <span id="LumIMG#id#" class="iconCmd#id# Lum_img"></span>
         </div>
         <!-- Début Valeur en position autre que haute -->
-            <div id="LumState#id#" class="Lum_state_other" style="display:inline-block;">
-                <div class="value">
-                    <span class="value#id# timeCmd label label-default value"></span>
-                </div>
-                <!-- Historique -->
-                    <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;text-align: left;">
-                        <span title="Min" class="tooltips">#minHistoryValue#</span>|<span title="Moy" class="tooltips">#averageHistoryValue#</span>|<span title="Max" class="tooltips">#maxHistoryValue#</span> <i class="#tendance#"></i>
-                    </div>
+        <div id="LumState#id#" class="Lum_state_other" style="display:inline-block;">
+            <div class="value">
+                <span class="value#id# timeCmd label label-default value"></span>
             </div>
+            <!-- Historique -->
+            <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;text-align: left;">
+                <span title="Min" class="tooltips">#minHistoryValue#</span>|<span title="Moy" class="tooltips">#averageHistoryValue#</span>|<span title="Max" class="tooltips">#maxHistoryValue#</span> <i class="#tendance#"></i>
+            </div>
+        </div>
         <!-- Fin Valeur en position autre que haute -->
     </div>
-<script>
-    jeedom.cmd.update['#id#'] = function(_options){
-        // Options de personnalisation avec valeur par defaut
+    <script>
+        jeedom.cmd.update['#id#'] = function(_options) {
+            // Options de personnalisation avec valeur par defaut
             // Paramètre "sizeh" & "sizew"
-                var srcImgHeight	   = is_numeric('#sizeh#') ? parseFloat('#sizeh#'):65;
-                var srcImgWidth 	   = is_numeric('#sizew#') ? parseFloat('#sizew#'):70;
-                // Type de taille
-                    var srcImgpourcent  = ('#Pourcentage#'!='#'+'Pourcentage#') ? "#Pourcentage#" : "NO";
-                    if (srcImgpourcent  == "NO") {
-                        var srcImgSize  = 'height='+srcImgHeight+'px width='+srcImgWidth+'px';
-                    } else if (srcImgpourcent  == "YES") {
-                        var srcImgSize  = 'height='+srcImgHeight+'% width='+srcImgWidth+'%';
-                    }
+            var srcImgHeight = is_numeric('#sizeh#') ? parseFloat('#sizeh#') : 65;
+            var srcImgWidth = is_numeric('#sizew#') ? parseFloat('#sizew#') : 70;
+            // Type de taille
+            var srcImgpourcent = ('#Pourcentage#' != '#' + 'Pourcentage#') ? "#Pourcentage#" : "NO";
+            if (srcImgpourcent == "NO") {
+                var srcImgSize = 'height=' + srcImgHeight + 'px width=' + srcImgWidth + 'px';
+            } else if (srcImgpourcent == "YES") {
+                var srcImgSize = 'height=' + srcImgHeight + '% width=' + srcImgWidth + '%';
+            }
             // Paramétrage Niveau
-                    var level_1         = (is_numeric('#level_1#')) ? parseFloat('#level_1#') : 20;
-                    var level_2         = (is_numeric('#level_2#')) ? parseFloat('#level_2#') : 100.0;
+            var level_1 = (is_numeric('#level_1#')) ? parseFloat('#level_1#') : 20;
+            var level_2 = (is_numeric('#level_2#')) ? parseFloat('#level_2#') : 100.0;
             // Paramétrage des images
-                    var srcImgURL       = 'data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/divers/';
-                    var srcImgURL_ER    = 'data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/error/';
-                // Paramètrage du logo Erreur
-                    var srcImglogoER    = ('#logo_error#'!='#'+'logo_error#') ? "#logo_error#" : "er_oups1";
-                    var srcImglogoER_T  = ('#logoER_type#'!='#'+'logoER_type#') ? "#logoER_type#" : "png";
-                // Paramètrage des images
-                    var srcImgLevel1	= ('#logo_level1#'!='#'+'logo_level1#') ? "#logo_level1#" : "di_moon";
-                    var srcImgLevel1_T	= ('#logo_level_type1#'!='#'+'logo_level_type1#') ? "#logo_level_type1#" : "png";
-                    var srcImgLevel2	= ('#logo_level2#'!='#'+'logo_level2#') ? "#logo_level2#" : "di_cloud";
-                    var srcImgLevel2_T	= ('#logo_level_type2#'!='#'+'logo_level_type2#') ? "#logo_level_type2#" : "png";
-                    var srcImgLevel3	= ('#logo_level3#'!='#'+'logo_level3#') ? "#logo_level3#" : "di_sun";
-                    var srcImgLevel3_T	= ('#logo_level_type3#'!='#'+'logo_level_type3#') ? "#logo_level_type3#" : "png";        
+            var srcImgURL = 'data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/divers/';
+            var srcImgURL_ER = 'data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/error/';
+            // Paramètrage du logo Erreur
+            var srcImglogoER = ('#logo_error#' != '#' + 'logo_error#') ? "#logo_error#" : "er_oups1";
+            var srcImglogoER_T = ('#logoER_type#' != '#' + 'logoER_type#') ? "#logoER_type#" : "png";
+            // Paramètrage des images
+            var srcImgLevel1 = ('#logo_level1#' != '#' + 'logo_level1#') ? "#logo_level1#" : "di_moon";
+            var srcImgLevel1_T = ('#logo_level_type1#' != '#' + 'logo_level_type1#') ? "#logo_level_type1#" : "png";
+            var srcImgLevel2 = ('#logo_level2#' != '#' + 'logo_level2#') ? "#logo_level2#" : "di_cloud";
+            var srcImgLevel2_T = ('#logo_level_type2#' != '#' + 'logo_level_type2#') ? "#logo_level_type2#" : "png";
+            var srcImgLevel3 = ('#logo_level3#' != '#' + 'logo_level3#') ? "#logo_level3#" : "di_sun";
+            var srcImgLevel3_T = ('#logo_level_type3#' != '#' + 'logo_level_type3#') ? "#logo_level_type3#" : "png";
             // Paramètre de la position de la légende
-                    var srcImgleg_pos	= ('#leg_pos#'!='#'+'leg_pos#') ? "#leg_pos#" : "bottom";
+            var srcImgleg_pos = ('#leg_pos#' != '#' + 'leg_pos#') ? "#leg_pos#" : "bottom";
 
-        // Update
+            // Update
             var srcPictureID;
             var srcImglogo_T;
             var State = parseFloat(_options.display_value);
-            if (State < level_1){
+            if (State < level_1) {
                 srcPictureID = srcImgLevel1;
                 srcImglogo_T = srcImgLevel1_T;
-            } else if (State >= level_1 && State < level_2){
+            } else if (State >= level_1 && State < level_2) {
                 srcPictureID = srcImgLevel2;
                 srcImglogo_T = srcImgLevel2_T;
-            } else if (State >= level_2){
+            } else if (State >= level_2) {
                 srcPictureID = srcImgLevel3;
                 srcImglogo_T = srcImgLevel3_T;
             } else {
                 srcPictureID = 'error';
-                srcImgURL    = srcImgURL_ER;
+                srcImgURL = srcImgURL_ER;
             }
-        // Update IMG + gestion erreur
-            if (srcPictureID == "error"){
-                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="'+srcImgURL +srcImglogoER +'.'+ srcImglogoER_T+'" style="height:80px;width:80px;">');
+            // Update IMG + gestion erreur
+            if (srcPictureID == "error") {
+                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="' + srcImgURL + srcImglogoER + '.' + srcImglogoER_T + '" style="height:80px;width:80px;">');
             } else {
-                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').empty().append('<img src="'+srcImgURL +srcPictureID +'.'+ srcImglogo_T+'" '+srcImgSize+'>');
+                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').empty().append('<img src="' + srcImgURL + srcPictureID + '.' + srcImglogo_T + '" ' + srcImgSize + '>');
             }
-            $('.cmd[data-cmd_uid=#uid#] .value#id#').empty().append(_options.display_value+' '+'#unite#');
-            $('.cmd[data-cmd_uid=#uid#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate);
-        
-        // Position Image et valeur
+            $('.cmd[data-cmd_uid=#uid#] .value#id#').empty().append(_options.display_value + ' ' + '#unite#');
+            $('.cmd[data-cmd_uid=#uid#]').attr('title', 'Valeur du ' + _options.valueDate + ', collectée le ' + _options.collectDate);
+
+            // Position Image et valeur
             if (srcImgleg_pos == "right") {
                 // Image
-                    $("#LumDivIMG#id#.Lum_div_img").css("float","left");
-                    $("#LumIMG#id#.Lum_img").css("margin-right","15px");
+                $("#LumDivIMG#id#.Lum_div_img").css("float", "left");
+                $("#LumIMG#id#.Lum_img").css("margin-right", "15px");
                 // Texte
-                    $("#LumState#id#.Lum_state_top").css("display","none");
-                    $("#LumState#id#.Lum_state_top").css("visibility","hidden");
-            } else if (srcImgleg_pos == "left"){
+                $("#LumState#id#.Lum_state_top").css("display", "none");
+                $("#LumState#id#.Lum_state_top").css("visibility", "hidden");
+            } else if (srcImgleg_pos == "left") {
                 // Image
-                    $("#LumDivIMG#id#.Lum_div_img").css("float","right");
-                    $("#LumIMG#id#.Lum_img").css("margin-left","15px");
+                $("#LumDivIMG#id#.Lum_div_img").css("float", "right");
+                $("#LumIMG#id#.Lum_img").css("margin-left", "15px");
                 // Texte
-                    $("#LumState#id#.Lum_state_top").css("display","none");
-                    $("#LumState#id#.Lum_state_top").css("visibility","hidden");
-            } else if (srcImgleg_pos == "top"){
+                $("#LumState#id#.Lum_state_top").css("display", "none");
+                $("#LumState#id#.Lum_state_top").css("visibility", "hidden");
+            } else if (srcImgleg_pos == "top") {
                 // Image
-                    //aucune modification nécessaire
+                //aucune modification nécessaire
                 // Texte
-                    $("#LumState#id#.Lum_state_other").css("display","none");
-                    $("#LumState#id#.Lum_state_other").css("visibility","hidden");
-            } else if (srcImgleg_pos == "bottom"){
+                $("#LumState#id#.Lum_state_other").css("display", "none");
+                $("#LumState#id#.Lum_state_other").css("visibility", "hidden");
+            } else if (srcImgleg_pos == "bottom") {
                 // Image
-                    //aucune modification nécessaire
+                //aucune modification nécessaire
                 // Texte
-                    $("#LumState#id#.Lum_state_top").css("display","none");
-                    $("#LumState#id#.Lum_state_top").css("visibility","hidden");
+                $("#LumState#id#.Lum_state_top").css("display", "none");
+                $("#LumState#id#.Lum_state_top").css("visibility", "hidden");
             }
-    }
-    jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
-</script>
+        }
+        jeedom.cmd.update['#id#']({
+            display_value: '#state#',
+            valueDate: '#valueDate#',
+            collectDate: '#collectDate#',
+            alertLevel: '#alertLevel#'
+        });
+
+    </script>
 </div>
